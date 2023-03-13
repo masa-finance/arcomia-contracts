@@ -8,7 +8,7 @@ import "@masa-finance/masa-contracts-identity/contracts/tokens/MasaSBTSelfSovere
 /// @author Masa Finance
 /// @notice Soulbound token that represents a Two-factor authentication (2FA)
 /// @dev Soulbound Green, that inherits from the SBT contract.
-contract SoulboundGreen is MasaSBTSelfSovereign, ReentrancyGuard {
+contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
     /* ========== STATE VARIABLES =========================================== */
 
     /* ========== INITIALIZE ================================================ */
@@ -37,7 +37,7 @@ contract SoulboundGreen is MasaSBTSelfSovereign, ReentrancyGuard {
             soulboundIdentity,
             paymentParams
         )
-        EIP712("SoulboundGreen", "1.0.0")
+        EIP712("ArcomiaOGCommunitySBT", "1.0.0")
     {}
 
     /* ========== RESTRICTED FUNCTIONS ====================================== */
@@ -72,7 +72,7 @@ contract SoulboundGreen is MasaSBTSelfSovereign, ReentrancyGuard {
 
         uint256 tokenId = _mintWithCounter(to);
 
-        emit SoulboundGreenMintedToIdentity(
+        emit MintedToIdentity(
             tokenId,
             identityId,
             authorityAddress,
@@ -111,7 +111,7 @@ contract SoulboundGreen is MasaSBTSelfSovereign, ReentrancyGuard {
 
         uint256 tokenId = _mintWithCounter(to);
 
-        emit SoulboundGreenMintedToAddress(
+        emit MintedToAddress(
             tokenId,
             to,
             authorityAddress,
@@ -171,7 +171,7 @@ contract SoulboundGreen is MasaSBTSelfSovereign, ReentrancyGuard {
 
     /* ========== EVENTS ==================================================== */
 
-    event SoulboundGreenMintedToIdentity(
+    event MintedToIdentity(
         uint256 tokenId,
         uint256 identityId,
         address authorityAddress,
@@ -180,7 +180,7 @@ contract SoulboundGreen is MasaSBTSelfSovereign, ReentrancyGuard {
         uint256 mintPrice
     );
 
-    event SoulboundGreenMintedToAddress(
+    event MintedToAddress(
         uint256 tokenId,
         address to,
         address authorityAddress,

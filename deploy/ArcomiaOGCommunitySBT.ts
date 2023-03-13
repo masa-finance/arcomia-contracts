@@ -2,7 +2,6 @@ import hre from "hardhat";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { DeployFunction } from "hardhat-deploy/dist/types";
 import { getEnvParams, getPrivateKey } from "../src/EnvParams";
-import { parseUnits } from "ethers/lib/utils";
 
 let admin: SignerWithAddress;
 
@@ -23,28 +22,14 @@ const func: DeployFunction = async ({
 
   [, admin] = await ethers.getSigners();
   const env = getEnvParams(network.name);
-  const baseUri = `${env.BASE_URI}/green/${network.name}/`;
-
-  let soulboundIdentityDeployedAddress;
-  if (
-    network.name === "mainnet" ||
-    network.name === "goerli" ||
-    network.name === "hardhat"
-  ) {
-    const soulboundIdentityDeployed = await deployments.get(
-      "SoulboundIdentity"
-    );
-    soulboundIdentityDeployedAddress = soulboundIdentityDeployed.address;
-  } else {
-    soulboundIdentityDeployedAddress = ethers.constants.AddressZero;
-  }
+  const baseUri = `${env.BASE_URI}`;
 
   const constructorArguments = [
     env.ADMIN || admin.address,
-    env.SOULBOUNDGREEN_NAME,
-    env.SOULBOUNDGREEN_SYMBOL,
+    env.ARCOMIAOGCOMMUNITYSBT_NAME,
+    env.ARCOMIAOGCOMMUNITYSBT_SYMBOL,
     baseUri,
-    soulboundIdentityDeployedAddress,
+    ethers.constants.AddressZero,
     [
       env.SWAP_ROUTER,
       env.WETH_TOKEN,
@@ -54,7 +39,7 @@ const func: DeployFunction = async ({
     ]
   ];
 
-  const soulboundGreenDeploymentResult = await deploy("SoulboundGreen", {
+  const arcomiaSBTDeploymentResult = await deploy("ArcomiaOGCommunitySBT", {
     from: deployer,
     args: constructorArguments,
     log: true
@@ -65,7 +50,7 @@ const func: DeployFunction = async ({
   if (network.name !== "hardhat") {
     try {
       await hre.run("verify:verify", {
-        address: soulboundGreenDeploymentResult.address,
+        address: arcomiaSBTDeploymentResult.address,
         constructorArguments
       });
     } catch (error) {
@@ -88,30 +73,18 @@ const func: DeployFunction = async ({
       ? new ethers.Wallet(getPrivateKey(network.name), ethers.provider)
       : admin;
 
-    const soulboundGreen = await ethers.getContractAt(
-      "SoulboundGreen",
-      soulboundGreenDeploymentResult.address
+    const arcomiaSBT = await ethers.getContractAt(
+      "ArcomiaOGCommunitySBT",
+      arcomiaSBTDeploymentResult.address
     );
 
-    // add authority to soulboundGreen
-    await soulboundGreen
+    // add authority to ArcomiaOGCommunitySBT
+    await arcomiaSBT
       .connect(signer)
       .addAuthority(env.AUTHORITY_WALLET || admin.address);
-
-    // add mint price to soulboundCreditScore
-    await soulboundGreen
-      .connect(signer)
-      .setMintPrice(parseUnits("1", env.STABLECOIN_DECIMALS || 6)); // 1 USDC
-
-    // we add payment methods
-    env.PAYMENT_METHODS_SOULBOUNDGREEN.split(" ").forEach(
-      async (paymentMethod) => {
-        await soulboundGreen.connect(signer).enablePaymentMethod(paymentMethod);
-      }
-    );
   }
 };
 
-func.tags = ["SoulboundGreen"];
-func.dependencies = ["SoulboundIdentity"];
+func.tags = ["ArcomiaOGCommunitySBT"];
+func.dependencies = [];
 export default func;

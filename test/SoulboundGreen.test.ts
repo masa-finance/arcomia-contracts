@@ -1,14 +1,14 @@
 import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { solidity } from "ethereum-waffle";
-import { ethers, deployments, getChainId } from "hardhat";
+import { deployments, ethers, getChainId } from "hardhat";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import { SoulboundGreen, SoulboundGreen__factory } from "../typechain";
+
 import {
-  SoulboundGreen,
-  SoulboundGreen__factory,
   SoulboundIdentity,
   SoulboundIdentity__factory
-} from "../typechain";
+} from "@masa-finance/masa-contracts-identity";
 
 chai.use(chaiAsPromised);
 chai.use(solidity);

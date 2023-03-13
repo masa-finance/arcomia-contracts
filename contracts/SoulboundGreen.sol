@@ -2,9 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-
-import "./libraries/Errors.sol";
-import "./tokens/MasaSBTSelfSovereign.sol";
+import "@masa-finance/masa-contracts-identity/contracts/tokens/MasaSBTSelfSovereign.sol";
 
 /// @title Soulbound Two-factor authentication (Green - 2FA)
 /// @author Masa Finance

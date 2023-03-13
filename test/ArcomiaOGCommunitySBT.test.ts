@@ -13,7 +13,7 @@ chai.use(solidity);
 const expect = chai.expect;
 
 // contract instances
-let arcomiaOGCommunitySBT: ArcomiaOGCommunitySBT;
+let arcomiaSBT: ArcomiaOGCommunitySBT;
 
 let owner: SignerWithAddress;
 let address1: SignerWithAddress;
@@ -36,7 +36,7 @@ const signMintCreditGreenToAddress = async (
       name: "ArcomiaOGCommunitySBT",
       version: "1.0.0",
       chainId: chainId,
-      verifyingContract: arcomiaOGCommunitySBT.address
+      verifyingContract: arcomiaSBT.address
     },
     // Types
     {
@@ -71,15 +71,15 @@ describe("Soulbound Two-factor authentication (Green)", () => {
       "ArcomiaOGCommunitySBT"
     );
 
-    arcomiaOGCommunitySBT = ArcomiaOGCommunitySBT__factory.connect(
+    arcomiaSBT = ArcomiaOGCommunitySBT__factory.connect(
       soulboundGreenAddress,
       owner
     );
 
     // we add authority account
-    await arcomiaOGCommunitySBT.addAuthority(authority.address);
+    await arcomiaSBT.addAuthority(authority.address);
 
-    await arcomiaOGCommunitySBT.setMintPrice(0); // 0 USDC
+    await arcomiaSBT.setMintPrice(0); // 0 USDC
 
     signatureToAddress = await signMintCreditGreenToAddress(
       address1.address,
@@ -89,36 +89,32 @@ describe("Soulbound Two-factor authentication (Green)", () => {
 
   describe("owner functions", () => {
     it("should set SoulboundIdentity from owner", async () => {
-      await arcomiaOGCommunitySBT
-        .connect(owner)
-        .setSoulboundIdentity(address1.address);
+      await arcomiaSBT.connect(owner).setSoulboundIdentity(address1.address);
 
-      expect(await arcomiaOGCommunitySBT.soulboundIdentity()).to.be.equal(
+      expect(await arcomiaSBT.soulboundIdentity()).to.be.equal(
         address1.address
       );
     });
 
     it("should fail to set SoulboundIdentity from non owner", async () => {
       await expect(
-        arcomiaOGCommunitySBT
-          .connect(address1)
-          .setSoulboundIdentity(address1.address)
+        arcomiaSBT.connect(address1).setSoulboundIdentity(address1.address)
       ).to.be.rejected;
     });
   });
 
   describe("sbt information", () => {
     it("should be able to get sbt information", async () => {
-      expect(await arcomiaOGCommunitySBT.name()).to.equal("Masa Green");
+      expect(await arcomiaSBT.name()).to.equal("Masa Green");
 
-      expect(await arcomiaOGCommunitySBT.symbol()).to.equal("MG-2FA");
+      expect(await arcomiaSBT.symbol()).to.equal("MG-2FA");
     });
   });
 
   describe("mint", () => {
     it("should fail to mint from owner address", async () => {
       await expect(
-        arcomiaOGCommunitySBT
+        arcomiaSBT
           .connect(owner)
           ["mint(address,address,address,uint256,bytes)"](
             ethers.constants.AddressZero,
@@ -131,7 +127,7 @@ describe("Soulbound Two-factor authentication (Green)", () => {
     });
 
     it("should mint twice", async () => {
-      await arcomiaOGCommunitySBT
+      await arcomiaSBT
         .connect(address1)
         ["mint(address,address,address,uint256,bytes)"](
           ethers.constants.AddressZero,
@@ -140,7 +136,7 @@ describe("Soulbound Two-factor authentication (Green)", () => {
           signatureDate,
           signatureToAddress
         );
-      await arcomiaOGCommunitySBT
+      await arcomiaSBT
         .connect(address1)
         ["mint(address,address,address,uint256,bytes)"](
           ethers.constants.AddressZero,
@@ -150,13 +146,13 @@ describe("Soulbound Two-factor authentication (Green)", () => {
           signatureToAddress
         );
 
-      expect(await arcomiaOGCommunitySBT.totalSupply()).to.equal(2);
-      expect(await arcomiaOGCommunitySBT.tokenByIndex(0)).to.equal(0);
-      expect(await arcomiaOGCommunitySBT.tokenByIndex(1)).to.equal(1);
+      expect(await arcomiaSBT.totalSupply()).to.equal(2);
+      expect(await arcomiaSBT.tokenByIndex(0)).to.equal(0);
+      expect(await arcomiaSBT.tokenByIndex(1)).to.equal(1);
     });
 
     it("should mint from final user address", async () => {
-      const mintTx = await arcomiaOGCommunitySBT
+      const mintTx = await arcomiaSBT
         .connect(address1)
         ["mint(address,address,address,uint256,bytes)"](
           ethers.constants.AddressZero,
@@ -174,15 +170,13 @@ describe("Soulbound Two-factor authentication (Green)", () => {
 
     it("should mint to an address, with a Green SBT not linked to an identity SC", async () => {
       // we set the identity SC to 0x0
-      await arcomiaOGCommunitySBT.setSoulboundIdentity(
-        ethers.constants.AddressZero
-      );
+      await arcomiaSBT.setSoulboundIdentity(ethers.constants.AddressZero);
 
       const signatureToAddress2 = await signMintCreditGreenToAddress(
         address2.address,
         authority
       );
-      const mintTx = await arcomiaOGCommunitySBT
+      const mintTx = await arcomiaSBT
         .connect(address2)
         ["mint(address,address,address,uint256,bytes)"](
           ethers.constants.AddressZero,
@@ -200,16 +194,16 @@ describe("Soulbound Two-factor authentication (Green)", () => {
       const tokenId = mintReceipt.events![0].args![1].toNumber();
 
       // check that this Green is not linked to an identity
-      await expect(
-        arcomiaOGCommunitySBT.getIdentityId(tokenId)
-      ).to.be.revertedWith("NotLinkedToAnIdentitySBT");
+      await expect(arcomiaSBT.getIdentityId(tokenId)).to.be.revertedWith(
+        "NotLinkedToAnIdentitySBT"
+      );
     });
   });
 
   describe("burn", () => {
     it("should burn", async () => {
       // we mint
-      let mintTx = await arcomiaOGCommunitySBT
+      let mintTx = await arcomiaSBT
         .connect(address1)
         ["mint(address,address,address,uint256,bytes)"](
           ethers.constants.AddressZero,
@@ -222,7 +216,7 @@ describe("Soulbound Two-factor authentication (Green)", () => {
       const tokenId1 = mintReceipt.events![0].args![1].toNumber();
 
       // we mint again
-      mintTx = await arcomiaOGCommunitySBT
+      mintTx = await arcomiaSBT
         .connect(address1)
         ["mint(address,address,address,uint256,bytes)"](
           ethers.constants.AddressZero,
@@ -234,36 +228,28 @@ describe("Soulbound Two-factor authentication (Green)", () => {
       mintReceipt = await mintTx.wait();
       const tokenId2 = mintReceipt.events![0].args![1].toNumber();
 
-      expect(
-        await arcomiaOGCommunitySBT.balanceOf(address1.address)
-      ).to.be.equal(2);
-      expect(
-        await arcomiaOGCommunitySBT.balanceOf(address1.address)
-      ).to.be.equal(2);
-      expect(
-        await arcomiaOGCommunitySBT["ownerOf(uint256)"](tokenId1)
-      ).to.be.equal(address1.address);
-      expect(
-        await arcomiaOGCommunitySBT["ownerOf(uint256)"](tokenId2)
-      ).to.be.equal(address1.address);
+      expect(await arcomiaSBT.balanceOf(address1.address)).to.be.equal(2);
+      expect(await arcomiaSBT.balanceOf(address1.address)).to.be.equal(2);
+      expect(await arcomiaSBT["ownerOf(uint256)"](tokenId1)).to.be.equal(
+        address1.address
+      );
+      expect(await arcomiaSBT["ownerOf(uint256)"](tokenId2)).to.be.equal(
+        address1.address
+      );
 
-      await arcomiaOGCommunitySBT.connect(address1).burn(tokenId1);
+      await arcomiaSBT.connect(address1).burn(tokenId1);
 
-      expect(
-        await arcomiaOGCommunitySBT.balanceOf(address1.address)
-      ).to.be.equal(1);
+      expect(await arcomiaSBT.balanceOf(address1.address)).to.be.equal(1);
 
-      await arcomiaOGCommunitySBT.connect(address1).burn(tokenId2);
+      await arcomiaSBT.connect(address1).burn(tokenId2);
 
-      expect(
-        await arcomiaOGCommunitySBT.balanceOf(address1.address)
-      ).to.be.equal(0);
+      expect(await arcomiaSBT.balanceOf(address1.address)).to.be.equal(0);
     });
   });
 
   describe("tokenUri", () => {
     it("should get a valid token URI from its tokenId", async () => {
-      const mintTx = await arcomiaOGCommunitySBT
+      const mintTx = await arcomiaSBT
         .connect(address1)
         ["mint(address,address,address,uint256,bytes)"](
           ethers.constants.AddressZero,
@@ -275,7 +261,7 @@ describe("Soulbound Two-factor authentication (Green)", () => {
 
       const mintReceipt = await mintTx.wait();
       const tokenId = mintReceipt.events![0].args![1].toNumber();
-      const tokenUri = await arcomiaOGCommunitySBT.tokenURI(tokenId);
+      const tokenUri = await arcomiaSBT.tokenURI(tokenId);
 
       // check if it's a valid url
       expect(() => new URL(tokenUri)).to.not.throw();

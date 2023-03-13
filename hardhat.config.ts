@@ -3,9 +3,7 @@ import {
   getInfuraApiKey,
   getCoinMarketCapApiKey,
   getEtherscanApiKey,
-  getBscscanApiKey,
-  getPolygonscanApiKey,
-  getCeloscanApiKey
+  getPolygonscanApiKey
 } from "./src/EnvParams";
 import "hardhat-deploy";
 import "@nomiclabs/hardhat-ethers";
@@ -31,26 +29,6 @@ const networks: NetworksUserConfig = {
     forking: {
       url: getInfuraURL("goerli")
     }
-  },
-  alfajores: {
-    url: "https://alfajores-forno.celo-testnet.org",
-    chainId: 44787,
-    accounts: [getPrivateKey("alfajores")]
-  },
-  celo: {
-    url: "https://forno.celo.org",
-    chainId: 42220,
-    accounts: [getPrivateKey("celo")]
-  },
-  bsctest: {
-    url: "https://data-seed-prebsc-1-s1.binance.org:8545",
-    chainId: 97,
-    accounts: [getPrivateKey("bsctest")]
-  },
-  bsc: {
-    url: "https://bsc-dataseed.binance.org/",
-    chainId: 56,
-    accounts: [getPrivateKey("bsc")]
   },
   mumbai: {
     url: "https://rpc-mumbai.maticvigil.com",
@@ -100,33 +78,11 @@ export default {
   },
   etherscan: {
     apiKey: {
-      bscTestnet: getBscscanApiKey(),
-      bsc: getBscscanApiKey(),
       polygonMumbai: getPolygonscanApiKey(),
       polygon: getPolygonscanApiKey(),
       goerli: getEtherscanApiKey(),
-      mainnet: getEtherscanApiKey(),
-      celo: getCeloscanApiKey(),
-      alfajores: getCeloscanApiKey()
-    },
-    customChains: [
-      {
-        network: "celo",
-        chainId: 42220,
-        urls: {
-          apiURL: "https://api.celoscan.io/api",
-          browserURL: "https://celoscan.io/"
-        }
-      },
-      {
-        network: "alfajores",
-        chainId: 44787,
-        urls: {
-          apiURL: "https://api-alfajores.celoscan.io/api",
-          browserURL: "https://alfajores.celoscan.io/"
-        }
-      }
-    ]
+      mainnet: getEtherscanApiKey()
+    }
   },
   gasReporter: {
     currency: "USD",

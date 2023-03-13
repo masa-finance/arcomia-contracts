@@ -164,9 +164,6 @@ describe("Arcomia OG Community SBT", () => {
     });
 
     it("should mint to an address, with an Arcomia SBT not linked to an identity SC", async () => {
-      // we set the identity SC to 0x0
-      await arcomiaSBT.setSoulboundIdentity(ethers.constants.AddressZero);
-
       const signatureToAddress2 = await signMintToAddress(
         address2.address,
         authority

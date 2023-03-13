@@ -2,11 +2,11 @@
 
 *Masa Finance*
 
-> Soulbound Two-factor authentication (Green - 2FA)
+> Soulbound Arcomia OG Community SBT
 
-Soulbound token that represents a Two-factor authentication (2FA)
+Soulbound token that represents an Arcomia OG Community SBT
 
-*Soulbound Green, that inherits from the SBT contract.*
+*Inherits from the SBT contract.*
 
 ## Methods
 

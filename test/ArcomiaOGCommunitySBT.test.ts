@@ -67,12 +67,12 @@ describe("Arcomia OG Community SBT", () => {
       fallbackToGlobal: true
     });
 
-    const { address: soulboundGreenAddress } = await deployments.get(
+    const { address: arcomiaSBTAddress } = await deployments.get(
       "ArcomiaOGCommunitySBT"
     );
 
     arcomiaSBT = ArcomiaOGCommunitySBT__factory.connect(
-      soulboundGreenAddress,
+      arcomiaSBTAddress,
       owner
     );
 
@@ -165,7 +165,7 @@ describe("Arcomia OG Community SBT", () => {
       expect(toAddress).to.equal(address1.address);
     });
 
-    it("should mint to an address, with a Green SBT not linked to an identity SC", async () => {
+    it("should mint to an address, with an Arcomia SBT not linked to an identity SC", async () => {
       // we set the identity SC to 0x0
       await arcomiaSBT.setSoulboundIdentity(ethers.constants.AddressZero);
 
@@ -190,7 +190,7 @@ describe("Arcomia OG Community SBT", () => {
 
       const tokenId = mintReceipt.events![0].args![1].toNumber();
 
-      // check that this Green is not linked to an identity
+      // check that this Arcomia SBT is not linked to an identity
       await expect(arcomiaSBT.getIdentityId(tokenId)).to.be.revertedWith(
         "NotLinkedToAnIdentitySBT"
       );

@@ -24,7 +24,7 @@ const signatureDate = Math.floor(Date.now() / 1000);
 
 let signatureToAddress: string;
 
-const signMintCreditGreenToAddress = async (
+const signMintToAddress = async (
   to: string,
   authoritySigner: SignerWithAddress
 ) => {
@@ -40,7 +40,7 @@ const signMintCreditGreenToAddress = async (
     },
     // Types
     {
-      MintGreen: [
+      Mint: [
         { name: "to", type: "address" },
         { name: "authorityAddress", type: "address" },
         { name: "signatureDate", type: "uint256" }
@@ -57,7 +57,7 @@ const signMintCreditGreenToAddress = async (
   return signature;
 };
 
-describe("Soulbound Two-factor authentication (Green)", () => {
+describe("Arcomia OG Community SBT", () => {
   before(async () => {
     [, owner, address1, address2, authority] = await ethers.getSigners();
   });
@@ -81,10 +81,7 @@ describe("Soulbound Two-factor authentication (Green)", () => {
 
     await arcomiaSBT.setMintPrice(0); // 0 USDC
 
-    signatureToAddress = await signMintCreditGreenToAddress(
-      address1.address,
-      authority
-    );
+    signatureToAddress = await signMintToAddress(address1.address, authority);
   });
 
   describe("owner functions", () => {
@@ -105,9 +102,9 @@ describe("Soulbound Two-factor authentication (Green)", () => {
 
   describe("sbt information", () => {
     it("should be able to get sbt information", async () => {
-      expect(await arcomiaSBT.name()).to.equal("Masa Green");
+      expect(await arcomiaSBT.name()).to.equal("Arcomia OG SBT");
 
-      expect(await arcomiaSBT.symbol()).to.equal("MG-2FA");
+      expect(await arcomiaSBT.symbol()).to.equal("AOG");
     });
   });
 
@@ -172,7 +169,7 @@ describe("Soulbound Two-factor authentication (Green)", () => {
       // we set the identity SC to 0x0
       await arcomiaSBT.setSoulboundIdentity(ethers.constants.AddressZero);
 
-      const signatureToAddress2 = await signMintCreditGreenToAddress(
+      const signatureToAddress2 = await signMintToAddress(
         address2.address,
         authority
       );

@@ -4,17 +4,17 @@ pragma solidity ^0.8.7;
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@masa-finance/masa-contracts-identity/contracts/tokens/MasaSBTSelfSovereign.sol";
 
-/// @title Soulbound Two-factor authentication (Green - 2FA)
+/// @title Soulbound Arcomia OG Community SBT
 /// @author Masa Finance
-/// @notice Soulbound token that represents a Two-factor authentication (2FA)
-/// @dev Soulbound Green, that inherits from the SBT contract.
+/// @notice Soulbound token that represents an Arcomia OG Community SBT
+/// @dev Inherits from the SBT contract.
 contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
     /* ========== STATE VARIABLES =========================================== */
 
     /* ========== INITIALIZE ================================================ */
 
-    /// @notice Creates a new soulbound Two-factor authentication (Green - 2FA)
-    /// @dev Creates a new soulbound Green, inheriting from the SBT contract.
+    /// @notice Creates a new Arcomia OG Community SBT
+    /// @dev Creates a new Arcomia OG Community SBT, inheriting from the SBT contract.
     /// @param admin Administrator of the smart contract
     /// @param name Name of the token
     /// @param symbol Symbol of the token
@@ -137,7 +137,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
                 keccak256(
                     abi.encode(
                         keccak256(
-                            "MintGreen(uint256 identityId,address authorityAddress,uint256 signatureDate)"
+                            "Mint(uint256 identityId,address authorityAddress,uint256 signatureDate)"
                         ),
                         identityId,
                         authorityAddress,
@@ -157,7 +157,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
                 keccak256(
                     abi.encode(
                         keccak256(
-                            "MintGreen(address to,address authorityAddress,uint256 signatureDate)"
+                            "Mint(address to,address authorityAddress,uint256 signatureDate)"
                         ),
                         to,
                         authorityAddress,

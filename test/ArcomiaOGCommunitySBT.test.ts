@@ -79,8 +79,6 @@ describe("Arcomia OG Community SBT", () => {
     // we add authority account
     await arcomiaSBT.addAuthority(authority.address);
 
-    await arcomiaSBT.setMintPrice(0); // 0 USDC
-
     signatureToAddress = await signMintToAddress(address1.address, authority);
   });
 
@@ -264,7 +262,7 @@ describe("Arcomia OG Community SBT", () => {
       expect(() => new URL(tokenUri)).to.not.throw();
       // we expect that the token uri is already encoded
       expect(tokenUri).to.equal(encodeURI(tokenUri));
-      expect(tokenUri).to.contain("/green/");
+      expect(tokenUri).to.contain("arcomia.io/");
     });
   });
 });

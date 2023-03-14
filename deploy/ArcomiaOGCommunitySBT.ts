@@ -46,7 +46,7 @@ const func: DeployFunction = async ({
     // nonce: currentNonce + 1 // to solve REPLACEMENT_UNDERPRICED, when needed
   });
 
-  // verify contract with etherscan, if its not a local network or celo
+  // verify contract with polygonscan, if its not a local network or celo
   if (network.name !== "hardhat") {
     try {
       await hre.run("verify:verify", {

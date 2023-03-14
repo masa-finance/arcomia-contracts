@@ -1,6 +1,5 @@
 import {
   getCoinMarketCapApiKey,
-  getEtherscanApiKey,
   getPolygonscanApiKey,
   getPrivateKey
 } from "./src/EnvParams";
@@ -58,12 +57,7 @@ export default {
     }
   },
   etherscan: {
-    apiKey: {
-      polygonMumbai: getPolygonscanApiKey(),
-      polygon: getPolygonscanApiKey(),
-      goerli: getEtherscanApiKey(),
-      mainnet: getEtherscanApiKey()
-    }
+    apiKey: getPolygonscanApiKey()
   },
   gasReporter: {
     currency: "USD",

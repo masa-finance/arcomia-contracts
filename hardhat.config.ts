@@ -1,9 +1,8 @@
 import {
-  getPrivateKey,
-  getInfuraApiKey,
   getCoinMarketCapApiKey,
   getEtherscanApiKey,
-  getPolygonscanApiKey
+  getPolygonscanApiKey,
+  getPrivateKey
 } from "./src/EnvParams";
 import "hardhat-deploy";
 import "@nomiclabs/hardhat-ethers";
@@ -16,10 +15,6 @@ import "hardhat-gas-reporter";
 import "solidity-coverage";
 import { NetworksUserConfig } from "hardhat/types";
 
-const getInfuraURL = (network: string) => {
-  return `https://${network}.infura.io/v3/${getInfuraApiKey()}`;
-};
-
 const networks: NetworksUserConfig = {
   hardhat: {
     hardfork: "istanbul",
@@ -27,7 +22,7 @@ const networks: NetworksUserConfig = {
     gasPrice: "auto",
     gas: 13000000,
     forking: {
-      url: getInfuraURL("goerli")
+      url: "https://rpc-mumbai.maticvigil.com"
     }
   },
   mumbai: {
@@ -39,20 +34,6 @@ const networks: NetworksUserConfig = {
     url: "https://polygon-rpc.com/",
     chainId: 137,
     accounts: [getPrivateKey("polygon")]
-  },
-  goerli: {
-    url: getInfuraURL("goerli"),
-    chainId: 5,
-    accounts: [getPrivateKey("goerli")],
-    gas: "auto", // 20000000
-    gasPrice: 200000000000 //"auto"
-  },
-  mainnet: {
-    url: getInfuraURL("mainnet"),
-    chainId: 1,
-    accounts: [getPrivateKey("mainnet")],
-    gas: "auto", // 20000000
-    gasPrice: "auto" // 100000000000
   }
 };
 

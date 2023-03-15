@@ -26,7 +26,7 @@ const mint = async (
   };
 
   const { selfSovereignSBT, prepareMint } =
-    await masa.contracts.factory<ArcomiaOGCommunitySBT>(
+    await masa.contracts.sbt<ArcomiaOGCommunitySBT>(
       address,
       ArcomiaOGCommunitySBT__factory
     );

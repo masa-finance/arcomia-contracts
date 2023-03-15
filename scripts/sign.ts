@@ -19,7 +19,7 @@ const sign = async (receiver: string): Promise<void> => {
     signatureDate
   };
 
-  const { sign } = await masa.contracts.factory<ArcomiaOGCommunitySBT>(
+  const { sign } = await masa.contracts.sbt<ArcomiaOGCommunitySBT>(
     address,
     ArcomiaOGCommunitySBT__factory
   );

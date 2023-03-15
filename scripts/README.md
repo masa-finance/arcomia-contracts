@@ -5,6 +5,13 @@
 You need `two` private keys, one of the Authority that is added to the Authorities collection on the Smart Contract.
 You need the private key of the receiver of the SBT to actually mint.
 
+In the root folder you need to run:
+
+- `yarn`
+- `yarn build`
+
+to create the typechain proxies that are required for contract interaction.
+
 ## Sign
 
 ```zsh

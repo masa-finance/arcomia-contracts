@@ -14,7 +14,7 @@ console.log("Current wallet", wallet.address);
 
 export const masa = new Masa({
   wallet,
-  defaultNetwork: "mumbai",
+  networkName: "mumbai",
   environment: "beta",
   verbose: true
 });

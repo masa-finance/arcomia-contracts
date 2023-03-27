@@ -15,7 +15,7 @@ export const types = {
   ]
 };
 
-export const paymentMethod: PaymentMethod = "eth";
+export const paymentMethod: PaymentMethod = "ETH";
 
 // the wallet that will mint the sbt and receiver it
 export const receiver = "0x8ba2D360323e3cA85b94c6F7720B70aAc8D37a7a";

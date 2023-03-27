@@ -9,6 +9,8 @@ import "@masa-finance/masa-contracts-identity/contracts/tokens/MasaSBTSelfSovere
 /// @notice Soulbound token that represents an Arcomia OG Community SBT
 /// @dev Inherits from the SBT contract.
 contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
+    error SBTAlreadyCreated(address to);
+
     /* ========== STATE VARIABLES =========================================== */
 
     /* ========== INITIALIZE ================================================ */
@@ -60,6 +62,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
         bytes calldata signature
     ) public payable virtual nonReentrant returns (uint256) {
         address to = soulboundIdentity.ownerOf(identityId);
+        if (balanceOf(to) > 0) revert SBTAlreadyCreated(to);
         if (to != _msgSender()) revert CallerNotOwner(_msgSender());
 
         uint256 tokenId = _verifyAndMint(
@@ -97,6 +100,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
         uint256 signatureDate,
         bytes calldata signature
     ) external payable virtual returns (uint256) {
+        if (balanceOf(to) > 0) revert SBTAlreadyCreated(to);
         if (to != _msgSender()) revert CallerNotOwner(_msgSender());
 
         uint256 tokenId = _verifyAndMint(

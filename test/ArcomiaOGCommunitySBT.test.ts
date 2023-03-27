@@ -131,19 +131,19 @@ describe("Arcomia OG Community SBT", () => {
           signatureDate,
           signatureToAddress
         );
-      await arcomiaSBT
-        .connect(address1)
-        ["mint(address,address,address,uint256,bytes)"](
-          ethers.constants.AddressZero,
-          address1.address,
-          authority.address,
-          signatureDate,
-          signatureToAddress
-        );
-
-      expect(await arcomiaSBT.totalSupply()).to.equal(2);
+      await expect(
+        arcomiaSBT
+          .connect(address1)
+          ["mint(address,address,address,uint256,bytes)"](
+            ethers.constants.AddressZero,
+            address1.address,
+            authority.address,
+            signatureDate,
+            signatureToAddress
+          )
+      ).to.be.revertedWith("SBTAlreadyCreated");
+      expect(await arcomiaSBT.totalSupply()).to.equal(1);
       expect(await arcomiaSBT.tokenByIndex(0)).to.equal(0);
-      expect(await arcomiaSBT.tokenByIndex(1)).to.equal(1);
     });
 
     it("should mint from final user address", async () => {
@@ -207,34 +207,12 @@ describe("Arcomia OG Community SBT", () => {
       let mintReceipt = await mintTx.wait();
       const tokenId1 = mintReceipt.events![0].args![1].toNumber();
 
-      // we mint again
-      mintTx = await arcomiaSBT
-        .connect(address1)
-        ["mint(address,address,address,uint256,bytes)"](
-          ethers.constants.AddressZero,
-          address1.address,
-          authority.address,
-          signatureDate,
-          signatureToAddress
-        );
-      mintReceipt = await mintTx.wait();
-      const tokenId2 = mintReceipt.events![0].args![1].toNumber();
-
-      expect(await arcomiaSBT.balanceOf(address1.address)).to.be.equal(2);
-      expect(await arcomiaSBT.balanceOf(address1.address)).to.be.equal(2);
+      expect(await arcomiaSBT.balanceOf(address1.address)).to.be.equal(1);
       expect(await arcomiaSBT["ownerOf(uint256)"](tokenId1)).to.be.equal(
-        address1.address
-      );
-      expect(await arcomiaSBT["ownerOf(uint256)"](tokenId2)).to.be.equal(
         address1.address
       );
 
       await arcomiaSBT.connect(address1).burn(tokenId1);
-
-      expect(await arcomiaSBT.balanceOf(address1.address)).to.be.equal(1);
-
-      await arcomiaSBT.connect(address1).burn(tokenId2);
-
       expect(await arcomiaSBT.balanceOf(address1.address)).to.be.equal(0);
     });
   });

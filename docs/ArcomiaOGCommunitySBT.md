@@ -1278,6 +1278,22 @@ error RefundFailed()
 
 
 
+### SBTAlreadyCreated
+
+```solidity
+error SBTAlreadyCreated(address to)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| to | address | undefined |
+
 ### SameValue
 
 ```solidity

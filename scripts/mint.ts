@@ -1,5 +1,5 @@
 import { masa } from "./masa";
-import { sbtAddress, name, paymentMethod, types } from "./sbt";
+import { name, paymentMethod, sbtAddress, types } from "./sbt";
 import {
   ArcomiaOGCommunitySBT,
   ArcomiaOGCommunitySBT__factory
@@ -26,7 +26,7 @@ const mint = async (
   };
 
   const { selfSovereignSBT, prepareMint } =
-    await masa.contracts.sbt<ArcomiaOGCommunitySBT>(
+    await masa.contracts.sbt.connect<ArcomiaOGCommunitySBT>(
       sbtAddress,
       ArcomiaOGCommunitySBT__factory
     );

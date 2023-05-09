@@ -1,5 +1,5 @@
 import { masa } from "./masa";
-import { address, name, receiver, types } from "./sbt";
+import { name, receiverAddress, sbtAddress, types } from "./sbt";
 import {
   ArcomiaOGCommunitySBT,
   ArcomiaOGCommunitySBT__factory
@@ -19,8 +19,8 @@ const sign = async (receiver: string): Promise<void> => {
     signatureDate
   };
 
-  const { sign } = await masa.contracts.sbt<ArcomiaOGCommunitySBT>(
-    address,
+  const { sign } = await masa.contracts.sbt.connect<ArcomiaOGCommunitySBT>(
+    sbtAddress,
     ArcomiaOGCommunitySBT__factory
   );
 
@@ -33,4 +33,4 @@ const sign = async (receiver: string): Promise<void> => {
   console.log({ signature, authorityAddress, signatureDate });
 };
 
-void sign(receiver);
+void sign(receiverAddress);

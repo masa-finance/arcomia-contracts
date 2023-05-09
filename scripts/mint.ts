@@ -1,5 +1,5 @@
 import { masa } from "./masa";
-import { address, name, paymentMethod, types } from "./sbt";
+import { name, paymentMethod, sbtAddress, types } from "./sbt";
 import {
   ArcomiaOGCommunitySBT,
   ArcomiaOGCommunitySBT__factory
@@ -25,13 +25,13 @@ const mint = async (
     signatureDate
   };
 
-  const { selfSovereignSBT, prepareMint } =
-    await masa.contracts.sbt<ArcomiaOGCommunitySBT>(
-      address,
+  const { sbtContract, prepareMint } =
+    await masa.contracts.sbt.connect<ArcomiaOGCommunitySBT>(
+      sbtAddress,
       ArcomiaOGCommunitySBT__factory
     );
 
-  if (!selfSovereignSBT) return;
+  if (!sbtContract) return;
 
   // prepare mint operation
   const prepareMintResults = await prepareMint(
@@ -66,12 +66,12 @@ const mint = async (
   const operation = "mint(address,address,address,uint256,bytes)";
 
   // estimate gas
-  const gasLimit = selfSovereignSBT.estimateGas[operation](
+  const gasLimit = sbtContract.estimateGas[operation](
     ...mintParameters,
     mintOverrides
   );
 
-  const transaction = await selfSovereignSBT[operation](...mintParameters, {
+  const transaction = await sbtContract[operation](...mintParameters, {
     ...mintOverrides,
     gasLimit
   });

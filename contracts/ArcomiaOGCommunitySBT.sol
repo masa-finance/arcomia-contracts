@@ -28,7 +28,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
         string memory name,
         string memory symbol,
         string memory baseTokenURI,
-        ISoulboundIdentity soulboundIdentity,
+        address soulboundIdentity,
         PaymentParams memory paymentParams
     )
         MasaSBTSelfSovereign(
@@ -65,7 +65,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
         if (balanceOf(to) > 0) revert SBTAlreadyCreated(to);
         if (to != _msgSender()) revert CallerNotOwner(_msgSender());
 
-        uint256 tokenId = _verifyAndMint(
+        uint256 tokenId = _mintWithCounter(
             paymentMethod,
             to,
             _hash(identityId, authorityAddress, signatureDate),
@@ -103,7 +103,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
         if (balanceOf(to) > 0) revert SBTAlreadyCreated(to);
         if (to != _msgSender()) revert CallerNotOwner(_msgSender());
 
-        uint256 tokenId = _verifyAndMint(
+        uint256 tokenId = _mintWithCounter(
             paymentMethod,
             to,
             _hash(to, authorityAddress, signatureDate),

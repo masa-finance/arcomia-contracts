@@ -51,8 +51,6 @@ const func: DeployFunction = async ({
     ]
   ];
 
-  console.log(constructorArguments);
-
   const soulStoreDeploymentResult = await deploy("ArcomiaSoulStore", {
     from: deployer,
     args: constructorArguments,

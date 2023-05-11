@@ -1,4 +1,5 @@
 import {
+  getCeloscanApiKey,
   getCoinMarketCapApiKey,
   getPolygonscanApiKey,
   getPrivateKey
@@ -62,7 +63,21 @@ export default {
     }
   },
   etherscan: {
-    apiKey: getPolygonscanApiKey()
+    apiKey: {
+      polygonMumbai: getPolygonscanApiKey(),
+      polygon: getPolygonscanApiKey(),
+      alfajores: getCeloscanApiKey()
+    },
+    customChains: [
+      {
+        network: "alfajores",
+        chainId: 44787,
+        urls: {
+          apiURL: "https://api-alfajores.celoscan.io/api",
+          browserURL: "https://alfajores.celoscan.io/"
+        }
+      }
+    ]
   },
   gasReporter: {
     currency: "USD",

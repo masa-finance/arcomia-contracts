@@ -3,6 +3,10 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { DeployFunction } from "hardhat-deploy/dist/types";
 import { getEnvParams, getPrivateKey } from "../src/EnvParams";
 
+import identityAddressPolygon from "@masa-finance/masa-contracts-identity/deployments/polygon/SoulboundIdentity.json";
+import identityAddressMumbai from "@masa-finance/masa-contracts-identity/deployments/mumbai/SoulboundIdentity.json";
+import identityAddressAlfajores from "@masa-finance/masa-contracts-identity/deployments/alfajores/SoulboundIdentity.json";
+
 let admin: SignerWithAddress;
 
 const func: DeployFunction = async ({
@@ -24,12 +28,21 @@ const func: DeployFunction = async ({
   const env = getEnvParams(network.name);
   const baseUri = `${env.BASE_URI}`;
 
+  let identityAddress;
+  if (network.name === "polygon") {
+    identityAddress = identityAddressPolygon.address;
+  } else if (network.name === "mumbai") {
+    identityAddress = identityAddressMumbai.address;
+  } else {
+    identityAddress = identityAddressAlfajores.address;
+  }
+
   const constructorArguments = [
     env.ADMIN || admin.address,
     env.ARCOMIAOGCOMMUNITYSBT_NAME,
     env.ARCOMIAOGCOMMUNITYSBT_SYMBOL,
     baseUri,
-    ethers.constants.AddressZero,
+    identityAddress,
     [
       env.SWAP_ROUTER,
       env.WETH_TOKEN,

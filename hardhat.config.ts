@@ -24,6 +24,11 @@ const networks: NetworksUserConfig = {
       url: "https://rpc-mumbai.maticvigil.com"
     }
   },
+  alfajores: {
+    url: "https://alfajores-forno.celo-testnet.org",
+    chainId: 44787,
+    accounts: [getPrivateKey("alfajores")]
+  },
   mumbai: {
     url: "https://rpc-mumbai.maticvigil.com",
     chainId: 80001,

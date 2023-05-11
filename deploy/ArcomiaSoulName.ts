@@ -31,66 +31,57 @@ const func: DeployFunction = async ({
     env.SOUL_NAME_CONTRACT_URI
   ];
 
-  if (
-    network.name === "mainnet" ||
-    network.name === "goerli" ||
-    network.name === "hardhat" ||
-    network.name === "celo" ||
-    network.name === "alfajores" ||
-    network.name === "basegoerli"
-  ) {
-    const soulNameDeploymentResult = await deploy("ArcomiaSoulName", {
-      from: deployer,
-      args: constructorArguments,
-      log: true
-    });
+  const soulNameDeploymentResult = await deploy("ArcomiaSoulName", {
+    from: deployer,
+    args: constructorArguments,
+    log: true
+  });
 
-    // verify contract with etherscan, if its not a local network or celo
-    if (network.name !== "hardhat") {
-      try {
-        await hre.run("verify:verify", {
-          address: soulNameDeploymentResult.address,
-          constructorArguments
-        });
-      } catch (error) {
-        if (
-          !error.message.includes("Contract source code already verified") &&
-          !error.message.includes("Reason: Already Verified")
-        ) {
-          throw error;
-        }
+  // verify contract with etherscan, if its not a local network or celo
+  if (network.name !== "hardhat") {
+    try {
+      await hre.run("verify:verify", {
+        address: soulNameDeploymentResult.address,
+        constructorArguments
+      });
+    } catch (error) {
+      if (
+        !error.message.includes("Contract source code already verified") &&
+        !error.message.includes("Reason: Already Verified")
+      ) {
+        throw error;
       }
     }
+  }
 
-    if (
-      network.name === "hardhat" ||
-      network.name === "alfajores" ||
-      network.name === "basegoerli"
-    ) {
-      /*
-      const soulboundIdentity = await ethers.getContractAt(
-        "SoulboundIdentity",
-        soulboundIdentityDeployed.address
-      );
-      const soulName = await ethers.getContractAt(
-        "SoulName",
-        soulNameDeploymentResult.address
-      );
+  if (
+    network.name === "hardhat" ||
+    network.name === "mumbai" ||
+    network.name === "alfajores"
+  ) {
+    /*
+    const soulboundIdentity = await ethers.getContractAt(
+      "SoulboundIdentity",
+      soulboundIdentityDeployed.address
+    );
+    const soulName = await ethers.getContractAt(
+      "SoulName",
+      soulNameDeploymentResult.address
+    );
 
-      // we set the soulName contract in soulboundIdentity and we add soulboundIdentity as soulName minter
-      const signer = env.ADMIN
-        ? new ethers.Wallet(getPrivateKey(network.name), ethers.provider)
-        : admin;
+    // we set the soulName contract in soulboundIdentity and we add soulboundIdentity as soulName minter
+    const signer = env.ADMIN
+      ? new ethers.Wallet(getPrivateKey(network.name), ethers.provider)
+      : admin;
 
-      const MINTER_ROLE = await soulName.MINTER_ROLE();
-      await soulboundIdentity
-        .connect(signer)
-        .setSoulName(soulNameDeploymentResult.address);
-      await soulName
-        .connect(signer)
-        .grantRole(MINTER_ROLE, soulboundIdentityDeployed.address);
-        */
-    }
+    const MINTER_ROLE = await soulName.MINTER_ROLE();
+    await soulboundIdentity
+      .connect(signer)
+      .setSoulName(soulNameDeploymentResult.address);
+    await soulName
+      .connect(signer)
+      .grantRole(MINTER_ROLE, soulboundIdentityDeployed.address);
+      */
   }
 };
 

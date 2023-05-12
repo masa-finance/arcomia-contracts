@@ -21,12 +21,10 @@ const func: DeployFunction = async ({
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  // const currentNonce: number = await ethers.provider.getTransactionCount(deployer);
-  // to solve REPLACEMENT_UNDERPRICED, when needed
-
   [, admin] = await ethers.getSigners();
   const env = getEnvParams(network.name);
-  const baseUri = `${env.BASE_URI}`;
+
+  // const soulboundIdentityDeployed = await deployments.get("SoulboundIdentity");
 
   let identityAddress;
   if (network.name === "polygon") {
@@ -39,34 +37,24 @@ const func: DeployFunction = async ({
 
   const constructorArguments = [
     env.ADMIN || admin.address,
-    env.ARCOMIAOGCOMMUNITYSBT_NAME,
-    env.ARCOMIAOGCOMMUNITYSBT_SYMBOL,
-    baseUri,
+    env.SOULNAME_NAME,
+    env.SOULNAME_SYMBOL,
     identityAddress,
-    [
-      env.SWAP_ROUTER,
-      env.WETH_TOKEN,
-      env.USDC_TOKEN,
-      env.MASA_TOKEN,
-      env.PROJECTFEE_RECEIVER || admin.address,
-      env.PROTOCOLFEE_RECEIVER || ethers.constants.AddressZero,
-      env.PROTOCOLFEE_AMOUNT || 0,
-      env.PROTOCOLFEE_PERCENT || 0
-    ]
+    env.SOULNAME_EXTENSION || ".soul",
+    env.SOUL_NAME_CONTRACT_URI
   ];
 
-  const arcomiaSBTDeploymentResult = await deploy("ArcomiaOGCommunitySBT", {
+  const soulNameDeploymentResult = await deploy("ArcomiaSoulName", {
     from: deployer,
     args: constructorArguments,
     log: true
-    // nonce: currentNonce + 1 // to solve REPLACEMENT_UNDERPRICED, when needed
   });
 
-  // verify contract with polygonscan, if its not a local network or celo
+  // verify contract with etherscan, if its not a local network or celo
   if (network.name !== "hardhat") {
     try {
       await hre.run("verify:verify", {
-        address: arcomiaSBTDeploymentResult.address,
+        address: soulNameDeploymentResult.address,
         constructorArguments
       });
     } catch (error) {
@@ -84,22 +72,42 @@ const func: DeployFunction = async ({
     network.name === "mumbai" ||
     network.name === "alfajores"
   ) {
+    /*
+    const soulboundIdentity = await ethers.getContractAt(
+      "SoulboundIdentity",
+      soulboundIdentityDeployed.address
+    );
+    const soulName = await ethers.getContractAt(
+      "SoulName",
+      soulNameDeploymentResult.address
+    );
+
+    // we set the soulName contract in soulboundIdentity and we add soulboundIdentity as soulName minter
     const signer = env.ADMIN
       ? new ethers.Wallet(getPrivateKey(network.name), ethers.provider)
       : admin;
 
-    const arcomiaSBT = await ethers.getContractAt(
-      "ArcomiaOGCommunitySBT",
-      arcomiaSBTDeploymentResult.address
-    );
-
-    // add authority to ArcomiaOGCommunitySBT
-    await arcomiaSBT
+    const MINTER_ROLE = await soulName.MINTER_ROLE();
+    await soulboundIdentity
       .connect(signer)
-      .addAuthority(env.AUTHORITY_WALLET || admin.address);
+      .setSoulName(soulNameDeploymentResult.address);
+    await soulName
+      .connect(signer)
+      .grantRole(MINTER_ROLE, soulboundIdentityDeployed.address);
+      */
   }
 };
 
-func.tags = ["ArcomiaOGCommunitySBT"];
-func.dependencies = [];
+func.skip = async ({ network }) => {
+  return (
+    network.name !== "mainnet" &&
+    network.name !== "goerli" &&
+    network.name !== "hardhat" &&
+    network.name !== "celo" &&
+    network.name !== "alfajores" &&
+    network.name !== "basegoerli"
+  );
+};
+func.tags = ["ArcomiaSoulName"];
+func.dependencies = ["SoulboundIdentity"];
 export default func;

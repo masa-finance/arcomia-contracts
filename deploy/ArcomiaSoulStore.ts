@@ -21,12 +21,8 @@ const func: DeployFunction = async ({
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  // const currentNonce: number = await ethers.provider.getTransactionCount(deployer);
-  // to solve REPLACEMENT_UNDERPRICED, when needed
-
   [, admin] = await ethers.getSigners();
   const env = getEnvParams(network.name);
-  const baseUri = `${env.BASE_URI}`;
 
   let identityAddress;
   if (network.name === "polygon") {
@@ -37,12 +33,12 @@ const func: DeployFunction = async ({
     identityAddress = identityAddressAlfajores.address;
   }
 
+  const soulNameDeployed = await deployments.get("ArcomiaSoulName");
+
   const constructorArguments = [
     env.ADMIN || admin.address,
-    env.ARCOMIAOGCOMMUNITYSBT_NAME,
-    env.ARCOMIAOGCOMMUNITYSBT_SYMBOL,
-    baseUri,
     identityAddress,
+    env.SOULNAME_PRICE_5LEN, // 5+ length price
     [
       env.SWAP_ROUTER,
       env.WETH_TOKEN,
@@ -55,18 +51,17 @@ const func: DeployFunction = async ({
     ]
   ];
 
-  const arcomiaSBTDeploymentResult = await deploy("ArcomiaOGCommunitySBT", {
+  const soulStoreDeploymentResult = await deploy("ArcomiaSoulStore", {
     from: deployer,
     args: constructorArguments,
     log: true
-    // nonce: currentNonce + 1 // to solve REPLACEMENT_UNDERPRICED, when needed
   });
 
-  // verify contract with polygonscan, if its not a local network or celo
+  // verify contract with etherscan, if its not a local network or celo
   if (network.name !== "hardhat") {
     try {
       await hre.run("verify:verify", {
-        address: arcomiaSBTDeploymentResult.address,
+        address: soulStoreDeploymentResult.address,
         constructorArguments
       });
     } catch (error) {
@@ -88,18 +83,51 @@ const func: DeployFunction = async ({
       ? new ethers.Wallet(getPrivateKey(network.name), ethers.provider)
       : admin;
 
-    const arcomiaSBT = await ethers.getContractAt(
-      "ArcomiaOGCommunitySBT",
-      arcomiaSBTDeploymentResult.address
+    // we set the registration prices per year and length of name
+    const soulStore = await ethers.getContractAt(
+      "SoulStore",
+      soulStoreDeploymentResult.address
     );
-
-    // add authority to ArcomiaOGCommunitySBT
-    await arcomiaSBT
+    await soulStore
       .connect(signer)
-      .addAuthority(env.AUTHORITY_WALLET || admin.address);
+      .setNameRegistrationPricePerYear(1, env.SOULNAME_PRICE_1LEN); // 1 length
+    await soulStore
+      .connect(signer)
+      .setNameRegistrationPricePerYear(2, env.SOULNAME_PRICE_2LEN); // 2 length
+    await soulStore
+      .connect(signer)
+      .setNameRegistrationPricePerYear(3, env.SOULNAME_PRICE_3LEN); // 3 length
+    await soulStore
+      .connect(signer)
+      .setNameRegistrationPricePerYear(4, env.SOULNAME_PRICE_4LEN); // 4 length
+
+    // add authorities to soulStore
+    const authorities = (env.AUTHORITY_WALLET || admin.address).split(" ");
+    for (let i = 0; i < authorities.length; i++) {
+      await soulStore.connect(signer).addAuthority(authorities[i]);
+    }
+
+    // we add soulStore as soulboundIdentity and soulName minter
+    if (soulNameDeployed.address !== ethers.constants.AddressZero) {
+      const soulName = await ethers.getContractAt(
+        "SoulName",
+        soulNameDeployed.address
+      );
+
+      const NAME_MINTER_ROLE = await soulName.MINTER_ROLE();
+      await soulName
+        .connect(signer)
+        .grantRole(NAME_MINTER_ROLE, soulStoreDeploymentResult.address);
+    }
+
+    // we add payment methods
+    const paymentMethods = env.PAYMENT_METHODS_SOULSTORE.split(" ");
+    for (let i = 0; i < paymentMethods.length; i++) {
+      await soulStore.connect(signer).enablePaymentMethod(paymentMethods[i]);
+    }
   }
 };
 
-func.tags = ["ArcomiaOGCommunitySBT"];
-func.dependencies = [];
+func.tags = ["ArcomiaSoulStore"];
+func.dependencies = ["ArcomiaSoulName"];
 export default func;

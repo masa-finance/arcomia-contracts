@@ -1,4 +1,5 @@
 import {
+  getCeloscanApiKey,
   getCoinMarketCapApiKey,
   getPolygonscanApiKey,
   getPrivateKey
@@ -23,6 +24,11 @@ const networks: NetworksUserConfig = {
     forking: {
       url: "https://rpc-mumbai.maticvigil.com"
     }
+  },
+  alfajores: {
+    url: "https://alfajores-forno.celo-testnet.org",
+    chainId: 44787,
+    accounts: [getPrivateKey("alfajores")]
   },
   mumbai: {
     url: "https://rpc-mumbai.maticvigil.com",
@@ -57,7 +63,21 @@ export default {
     }
   },
   etherscan: {
-    apiKey: getPolygonscanApiKey()
+    apiKey: {
+      polygonMumbai: getPolygonscanApiKey(),
+      polygon: getPolygonscanApiKey(),
+      alfajores: getCeloscanApiKey()
+    },
+    customChains: [
+      {
+        network: "alfajores",
+        chainId: 44787,
+        urls: {
+          apiURL: "https://api-alfajores.celoscan.io/api",
+          browserURL: "https://alfajores.celoscan.io/"
+        }
+      }
+    ]
   },
   gasReporter: {
     currency: "USD",

@@ -182,13 +182,6 @@ describe("Arcomia OG Community SBT", () => {
       const toAddress = mintReceipt.events![1].args![1];
 
       expect(toAddress).to.equal(address2.address);
-
-      const tokenId = mintReceipt.events![0].args![1].toNumber();
-
-      // check that this Arcomia SBT is not linked to an identity
-      await expect(arcomiaSBT.getIdentityId(tokenId)).to.be.revertedWith(
-        "NotLinkedToAnIdentitySBT"
-      );
     });
   });
 

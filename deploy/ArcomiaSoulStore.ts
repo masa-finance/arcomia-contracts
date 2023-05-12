@@ -62,6 +62,7 @@ const func: DeployFunction = async ({
     try {
       await hre.run("verify:verify", {
         address: soulStoreDeploymentResult.address,
+        contract: "contracts/ArcomiaSoulStore.sol:ArcomiaSoulStore",
         constructorArguments
       });
     } catch (error) {

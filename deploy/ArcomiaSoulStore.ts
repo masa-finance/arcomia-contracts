@@ -38,6 +38,7 @@ const func: DeployFunction = async ({
   const constructorArguments = [
     env.ADMIN || admin.address,
     identityAddress,
+    soulNameDeployed.address,
     env.SOULNAME_PRICE_5LEN, // 5+ length price
     [
       env.SWAP_ROUTER,

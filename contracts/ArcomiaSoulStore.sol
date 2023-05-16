@@ -17,18 +17,21 @@ contract ArcomiaSoulStore is SoulStore {
     /// @dev Creates a new Soul Store, that has the role to minting new Soulbound Identities
     /// and Soul Name NFTs, paying a fee
     /// @param admin Administrator of the smart contract
-    /// @param _soulBoundIdentity Address of the Soulbound identity contract
+    /// @param _soulboundIdentity Address of the Soulbound identity contract
+    /// @param _soulName Address of the Soul Name NFT contract
     /// @param _nameRegistrationPricePerYear Price of the default name registering in stable coin per year
     /// @param paymentParams Payment gateway params
     constructor(
         address admin,
-        ISoulboundIdentity _soulBoundIdentity,
+        ISoulboundIdentity _soulboundIdentity,
+        ISoulName _soulName,
         uint256 _nameRegistrationPricePerYear,
         PaymentParams memory paymentParams
     )
         SoulStore(
             admin,
-            _soulBoundIdentity,
+            _soulboundIdentity,
+            _soulName,
             _nameRegistrationPricePerYear,
             paymentParams
         )

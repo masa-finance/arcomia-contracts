@@ -1,7 +1,7 @@
 import hre from "hardhat";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { DeployFunction } from "hardhat-deploy/dist/types";
-import { getEnvParams, getPrivateKey } from "../src/EnvParams";
+import { getEnvParams } from "../src/EnvParams";
 
 import identityAddressPolygon from "@masa-finance/masa-contracts-identity/deployments/polygon/SoulboundIdentity.json";
 import identityAddressMumbai from "@masa-finance/masa-contracts-identity/deployments/mumbai/SoulboundIdentity.json";
@@ -66,36 +66,6 @@ const func: DeployFunction = async ({
         throw error;
       }
     }
-  }
-
-  if (
-    network.name === "hardhat" ||
-    network.name === "mumbai" ||
-    network.name === "alfajores"
-  ) {
-    /*
-    const soulboundIdentity = await ethers.getContractAt(
-      "SoulboundIdentity",
-      soulboundIdentityDeployed.address
-    );
-    const soulName = await ethers.getContractAt(
-      "SoulName",
-      soulNameDeploymentResult.address
-    );
-
-    // we set the soulName contract in soulboundIdentity and we add soulboundIdentity as soulName minter
-    const signer = env.ADMIN
-      ? new ethers.Wallet(getPrivateKey(network.name), ethers.provider)
-      : admin;
-
-    const MINTER_ROLE = await soulName.MINTER_ROLE();
-    await soulboundIdentity
-      .connect(signer)
-      .setSoulName(soulNameDeploymentResult.address);
-    await soulName
-      .connect(signer)
-      .grantRole(MINTER_ROLE, soulboundIdentityDeployed.address);
-      */
   }
 };
 

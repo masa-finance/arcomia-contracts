@@ -3,9 +3,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { DeployFunction } from "hardhat-deploy/dist/types";
 import { getEnvParams } from "../src/EnvParams";
 
-import identityAddressPolygon from "@masa-finance/masa-contracts-identity/deployments/polygon/SoulboundIdentity.json";
-import identityAddressMumbai from "@masa-finance/masa-contracts-identity/deployments/mumbai/SoulboundIdentity.json";
-import identityAddressAlfajores from "@masa-finance/masa-contracts-identity/deployments/alfajores/SoulboundIdentity.json";
+import addresses from "@masa-finance/masa-contracts-identity/addresses.json";
 
 let admin: SignerWithAddress;
 
@@ -26,13 +24,11 @@ const func: DeployFunction = async ({
 
   // const soulboundIdentityDeployed = await deployments.get("SoulboundIdentity");
 
-  let identityAddress;
-  if (network.name === "polygon") {
-    identityAddress = identityAddressPolygon.address;
-  } else if (network.name === "mumbai") {
-    identityAddress = identityAddressMumbai.address;
-  } else {
-    identityAddress = identityAddressAlfajores.address;
+  let identityAddress = addresses[network.name].SoulboundIdentity;
+  if (!identityAddress) {
+    throw new Error(
+      `SoulboundIdentity address not found for network ${network.name}`
+    );
   }
 
   const constructorArguments = [

@@ -24,7 +24,9 @@ const func: DeployFunction = async ({
 
   // const soulboundIdentityDeployed = await deployments.get("SoulboundIdentity");
 
-  let identityAddress = addresses[network.name].SoulboundIdentity;
+  let identityAddress =
+    addresses[network.name == "hardhat" ? "alfajores" : network.name]
+      .SoulboundIdentity;
   if (!identityAddress) {
     throw new Error(
       `SoulboundIdentity address not found for network ${network.name}`

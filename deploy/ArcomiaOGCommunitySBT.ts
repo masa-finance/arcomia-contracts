@@ -26,7 +26,9 @@ const func: DeployFunction = async ({
   const env = getEnvParams(network.name);
   const baseUri = `${env.BASE_URI}`;
 
-  let identityAddress = addresses[network.name].SoulboundIdentity;
+  let identityAddress =
+    addresses[network.name == "hardhat" ? "alfajores" : network.name]
+      .SoulboundIdentity;
   if (!identityAddress) {
     throw new Error(
       `SoulboundIdentity address not found for network ${network.name}`

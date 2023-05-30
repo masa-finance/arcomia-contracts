@@ -22,7 +22,9 @@ const func: DeployFunction = async ({
   [, admin] = await ethers.getSigners();
   const env = getEnvParams(network.name);
 
-  let identityAddress = addresses[network.name].SoulboundIdentity;
+  let identityAddress =
+    addresses[network.name == "hardhat" ? "alfajores" : network.name]
+      .SoulboundIdentity;
   if (!identityAddress) {
     throw new Error(
       `SoulboundIdentity address not found for network ${network.name}`

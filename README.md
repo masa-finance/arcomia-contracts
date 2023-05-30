@@ -4,7 +4,7 @@
 
 ### Deployment addresses
 
-You can see the deployment address of the smart contracts in the [deployments/mumbai](deployments/mumbai) and [deployments/polygon](deployments/polygon) folders. For every deployed smart contract you will find a `<smart_contract>.json` JSON file with the address in the `"address"` field.
+You can see the deployment address of the smart contracts in the [addresses.json](addresses.json) file. For every deployed smart contract you will find a `<network>.<contract>` value.
 
 #### Configuration
 

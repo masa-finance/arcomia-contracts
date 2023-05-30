@@ -2,8 +2,10 @@ artifacts/
 cache/
 contracts/
 deploy/
+deployments/
 docs/
 node_modules/
 src/
 test/
 typechain/
+**/solcInputs/

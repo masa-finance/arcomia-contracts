@@ -3,13 +3,6 @@
   "version": "1.5.0",
   "main": "dist/typechain/index.js",
   "types": "dist/typechain/index.d.ts",
-  "files": [
-    "contracts/**/*",
-    "deployments/**/*",
-    "dist/**/*",
-    "hardhat.config.ts",
-    "tsconfig.json"
-  ],
   "repository": "git@github.com:masa-finance/arcomia-contracts.git",
   "author": "Sebastian Gerske <13647606+H34D@users.noreply.github.com>",
   "license": "MIT",
@@ -20,12 +13,15 @@
     "clean": "hardhat clean",
     "docgen": "hardhat dodoc",
     "coverage": "hardhat coverage",
-    "deploy": "hardhat deploy",
+    "deploy:alfajores": "hardhat deploy --network alfajores && yarn addresses",
+    "deploy:mumbai": "hardhat deploy --network mumbai && yarn addresses",
+    "deploy:polygon": "hardhat deploy --network polygon && yarn addresses",
     "run:node": "hardhat node",
     "test": "hardhat test",
     "prettier": "prettier --write 'contracts/**/*.sol' '**/*.ts'",
     "solhint": "solhint contracts/**/*.sol",
-    "release": "GITHUB_TOKEN=$(grep GITHUB_TOKEN .env | cut -d '=' -f2) release-it"
+    "release": "GITHUB_TOKEN=$(grep GITHUB_TOKEN .env | cut -d '=' -f2) release-it",
+    "addresses": "hardhat run src/addresses.ts"
   },
   "dependencies": {
     "ethers": "~5.7.2"

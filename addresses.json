@@ -1,0 +1,15 @@
+{
+  "alfajores": {
+    "ArcomiaOGCommunitySBT": "0xd466D76D8E40830A00963e2e6F901eE18A96395d",
+    "ArcomiaSoulName": "0x1437a32C89AD5fB80aA29ABDc97b20544Fa940DB",
+    "ArcomiaSoulStore": "0x51dc626A238202E0A7815200672967ce7189e582"
+  },
+  "mumbai": {
+    "ArcomiaOGCommunitySBT": "0xEF9A0b610c511C73aa53bE8985Fd0271C3A3d199"
+  },
+  "polygon": {
+    "ArcomiaOGCommunitySBT": "0x836198F984431EcdC97A7549C1Bd6B3Cd9E7a89B",
+    "ArcomiaSoulName": "0x4e496e294861282d55E109f49905244715c6a5EF",
+    "ArcomiaSoulStore": "0xeB05dca1A7e0E37E364B938d989fc0273Ff3bFCa"
+  }
+}

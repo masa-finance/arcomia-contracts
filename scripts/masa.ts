@@ -13,7 +13,7 @@ const wallet = new Wallet(pk).connect(provider);
 console.log("Current wallet", wallet.address);
 
 export const masa = new Masa({
-  wallet,
+  signer: wallet,
   networkName: "mumbai",
   environment: "beta",
   verbose: true

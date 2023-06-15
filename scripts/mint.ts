@@ -1,10 +1,7 @@
 import { masa } from "./masa";
 import { name, paymentMethod, sbtAddress, types } from "./sbt";
-import {
-  ArcomiaOGCommunitySBT,
-  ArcomiaOGCommunitySBT__factory
-} from "../typechain";
 import { Messages } from "@masa-finance/masa-sdk";
+import { ArcomiaOGCommunitySBT__factory } from "../typechain";
 
 const mint = async (
   signature: string,
@@ -12,7 +9,7 @@ const mint = async (
   signatureDate: number
 ): Promise<void> => {
   // evaluate receiver
-  const to = await masa.config.wallet.getAddress();
+  const to = await masa.config.signer.getAddress();
 
   // fill the collection with data
   const value: {
@@ -25,13 +22,12 @@ const mint = async (
     signatureDate
   };
 
-  const { sbtContract, prepareMint } =
-    await masa.contracts.sbt.connect<ArcomiaOGCommunitySBT>(
-      sbtAddress,
-      ArcomiaOGCommunitySBT__factory
-    );
+  const { contract, prepareMint } = await masa.contracts.sssbt.connect(
+    sbtAddress,
+    ArcomiaOGCommunitySBT__factory
+  );
 
-  if (!sbtContract) return;
+  if (!contract) return;
 
   // prepare mint operation
   const prepareMintResults = await prepareMint(
@@ -63,15 +59,15 @@ const mint = async (
 
   console.log({ mintParameters, mintOverrides });
 
-  const operation = "mint(address,address,address,uint256,bytes)";
+  const {
+    estimateGas: { "mint(address,address,address,uint256,bytes)": estimateGas },
+    "mint(address,address,address,uint256,bytes)": mint
+  } = contract;
 
   // estimate gas
-  const gasLimit = sbtContract.estimateGas[operation](
-    ...mintParameters,
-    mintOverrides
-  );
+  const gasLimit = estimateGas(...mintParameters, mintOverrides);
 
-  const transaction = await sbtContract[operation](...mintParameters, {
+  const transaction = await mint(...mintParameters, {
     ...mintOverrides,
     gasLimit
   });

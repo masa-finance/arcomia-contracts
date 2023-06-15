@@ -1,9 +1,6 @@
 import { masa } from "./masa";
 import { name, receiverAddress, sbtAddress, types } from "./sbt";
-import {
-  ArcomiaOGCommunitySBT,
-  ArcomiaOGCommunitySBT__factory
-} from "../typechain";
+import { ArcomiaOGCommunitySBT__factory } from "../typechain";
 
 const sign = async (receiver: string): Promise<void> => {
   const signatureDate = Date.now();
@@ -15,11 +12,11 @@ const sign = async (receiver: string): Promise<void> => {
     signatureDate: number;
   } = {
     to: receiver,
-    authorityAddress: await masa.config.wallet.getAddress(),
+    authorityAddress: await masa.config.signer.getAddress(),
     signatureDate
   };
 
-  const { sign } = await masa.contracts.sbt.connect<ArcomiaOGCommunitySBT>(
+  const { sign } = await masa.contracts.sssbt.connect(
     sbtAddress,
     ArcomiaOGCommunitySBT__factory
   );

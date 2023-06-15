@@ -655,19 +655,19 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@masa-finance/masa-contracts-identity@^1.8.0":
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-1.8.0.tgz#d32b9416a377a736b567a6bcbbedcf973314b269"
-  integrity sha512-cpUVyWmlOP3683MiSTYKlTOAgmYpGhOIsnCNpU/nq2nP4hUOzCX4O3lpFTUMHIZEY6yX36Y1Rg/bonc3ELLk5A==
+"@masa-finance/masa-contracts-identity@^1.8.2":
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-1.8.2.tgz#3818bc44ffd9307417e6c294c2d438b09adc3efd"
+  integrity sha512-gH3LlZdFqjVk2JUL3tm6B/StYqs0kSJK5XhnIFWq4iIC3l3/U9D45yT3Yhx/7uFDDr9Zu23UHrs/gFzNg4OU2w==
   dependencies:
     ethers "~5.7.2"
 
-"@masa-finance/masa-sdk@^3.3.2":
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.3.2.tgz#29affa4abff5d57951ed21789700400a26f99bea"
-  integrity sha512-lEkw2zH7W47MWXXnrDUTYqquE8qtUskRiKYbUBfVGIwYcMK9TyZ1NP4p9oG1g/fpoOD6s1HGcaUTMT2RBAFlng==
+"@masa-finance/masa-sdk@^3.4.6":
+  version "3.4.6"
+  resolved "https://registry.yarnpkg.com/@masa-finance/masa-sdk/-/masa-sdk-3.4.6.tgz#3576ff0ea0b81367074e78119c9f482bb2e1823e"
+  integrity sha512-WLzroD7vnXd2EJKif4UIhGr0UxdI6jdoZm2Tq3X5/b2EEM9dDEz8xwI1ITaoOEGMTONXJlh0NjgZmFYQdRgGbQ==
   dependencies:
-    "@masa-finance/masa-contracts-identity" "^1.8.0"
+    "@masa-finance/masa-contracts-identity" "^1.8.2"
     "@masa-finance/masa-token" "^2.0.0"
     arweave "1.11.8"
     axios "^1.3.2"
@@ -1455,7 +1455,7 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@^20.3.0":
+"@types/node@*":
   version "20.3.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.0.tgz#719498898d5defab83c3560f45d8498f58d11938"
   integrity sha512-cumHmIAf6On83X7yP+LrsEyUOf/YlociZelmpRYaGFydoaPdxdt80MAbu6vWerQT2COCp2nPvHdsbD7tHn/YlQ==
@@ -1469,6 +1469,11 @@
   version "10.17.60"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.60.tgz#35f3d6213daed95da7f0f73e75bcc6980e90597b"
   integrity sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==
+
+"@types/node@^20.3.1":
+  version "20.3.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.1.tgz#e8a83f1aa8b649377bb1fb5d7bac5cb90e784dfe"
+  integrity sha512-EhcH/wvidPy1WeML3TtYFGR83UzjxeWRen9V402T8aUGYsCHOmfoisV3ZSg03gAFIbLq8TnWOJ0f4cALtnSEUg==
 
 "@types/node@^8.0.0":
   version "8.10.66"

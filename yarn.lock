@@ -660,7 +660,7 @@
   resolved "https://registry.yarnpkg.com/@ljharb/through/-/through-2.3.9.tgz#85f221eb82f9d555e180e87d6e50fb154af85408"
   integrity sha512-yN599ZBuMPPK4tdoToLlvgJB4CLK8fGl7ntfy0Wn7U6ttNvHYurd81bfUiK/6sMkiIwm65R6ck4L6+Y3DfVbNQ==
 
-"@masa-finance/masa-contracts-identity@^1.8.3", "@masa-finance/masa-contracts-identity@^1.8.6":
+"@masa-finance/masa-contracts-identity@^1.8.4", "@masa-finance/masa-contracts-identity@^1.8.6":
   version "1.8.6"
   resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-1.8.6.tgz#71db00dfe56a3176d72bf1680badeb42a23900d3"
   integrity sha512-YBpup+vqK0TY2Fsd4xzomBg3ocDFI+lzT5Pre4XodAUIKXrpXWZwu2fU2ib5Kjlb91ThYwNgHtWK+lQzYbFzRQ==

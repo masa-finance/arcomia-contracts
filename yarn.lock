@@ -1358,10 +1358,10 @@
   dependencies:
     "@types/chai" "*"
 
-"@types/chai@*", "@types/chai@^4.3.6":
-  version "4.3.6"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.6.tgz#7b489e8baf393d5dd1266fb203ddd4ea941259e6"
-  integrity sha512-VOVRLM1mBxIRxydiViqPcKn6MIxZytrbMpd6RJLIWKxUNr3zux8no0Oc7kJx0WAPIitgZ0gkrDS+btlqQpubpw==
+"@types/chai@*", "@types/chai@^4.3.8":
+  version "4.3.8"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.8.tgz#aa200a264a3bc78ccfc1718eedbd3b9d5a591270"
+  integrity sha512-yW/qTM4mRBBcsA9Xw9FbcImYtFPY7sgr+G/O5RDYVmxiy9a+pE5FyoFUi8JYCZY5nicj8atrr1pcfPiYpeNGOA==
 
 "@types/concat-stream@^1.6.0":
   version "1.6.1"
@@ -1470,10 +1470,10 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@^20.8.4":
-  version "20.8.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.4.tgz#0e9ebb2ff29d5c3302fc84477d066fa7c6b441aa"
-  integrity sha512-ZVPnqU58giiCjSxjVUESDtdPk4QR5WQhhINbc9UBrKLU68MX5BF6kbQzTrkwbolyr0X8ChBpXfavr5mZFKZQ5A==
+"@types/node@*", "@types/node@^20.8.6":
+  version "20.8.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.6.tgz#0dbd4ebcc82ad0128df05d0e6f57e05359ee47fa"
+  integrity sha512-eWO4K2Ji70QzKUqRy6oyJWUeB7+g2cRagT3T/nxYibYcT4y2BDL8lqolRXjTHmkZCdJfIPaY73KbJAZmcryxTQ==
   dependencies:
     undici-types "~5.25.1"
 
@@ -4525,10 +4525,10 @@ hardhat-waffle@^0.0.1-security:
   resolved "https://registry.yarnpkg.com/hardhat-waffle/-/hardhat-waffle-0.0.1-security.tgz#f1c6d19746ff625fd116b13a59112eeaf1eaad27"
   integrity sha512-r/rQUfoXmWm2fHUB3lQ3nXeazX0ZPLMOfz3dlX3NdA3pd4MIpDWKmOCL9OOLi5h9ws9gzBs7SleGiEnQVO547A==
 
-hardhat@^2.17.4:
-  version "2.17.4"
-  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.17.4.tgz#aebaac3aea54ee02d6afa089eeb4c095e83a817c"
-  integrity sha512-YTyHjVc9s14CY/O7Dbtzcr/92fcz6AzhrMaj6lYsZpYPIPLzOrFCZHHPxfGQB6FiE6IPNE0uJaAbr7zGF79goA==
+hardhat@^2.18.1:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.18.1.tgz#6339d656dbf0510b51457b0f0746e5b9cc7a1756"
+  integrity sha512-b55rW7Ka+fvJeg6oWuBTXoYQEUurevCCankjGNTwczwD3GnkhV9GEei7KUT+9IKmWx3lC+zyxlFxeDbg0gUoHw==
   dependencies:
     "@ethersproject/abi" "^5.1.2"
     "@metamask/eth-sig-util" "^4.0.0"
@@ -8048,10 +8048,10 @@ type-fest@^2.13.0, type-fest@^2.5.1:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.19.0.tgz#88068015bb33036a598b952e55e9311a60fd3a9b"
   integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
 
-typechain@^8.0.0, typechain@^8.3.1:
-  version "8.3.1"
-  resolved "https://registry.yarnpkg.com/typechain/-/typechain-8.3.1.tgz#dccbc839b94877997536c356380eff7325395cfb"
-  integrity sha512-fA7clol2IP/56yq6vkMTR+4URF1nGjV82Wx6Rf09EsqD4tkzMAvEaqYxVFCavJm/1xaRga/oD55K+4FtuXwQOQ==
+typechain@^8.0.0, typechain@^8.3.2:
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/typechain/-/typechain-8.3.2.tgz#1090dd8d9c57b6ef2aed3640a516bdbf01b00d73"
+  integrity sha512-x/sQYr5w9K7yv3es7jo4KTX05CLxOf7TRWwoHlrjRh8H82G64g+k7VuWPJlgMo6qrjfCulOdfBjiaDtmhFYD/Q==
   dependencies:
     "@types/prettier" "^2.1.1"
     debug "^4.3.1"

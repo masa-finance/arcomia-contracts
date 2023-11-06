@@ -665,7 +665,7 @@
   resolved "https://registry.yarnpkg.com/@ljharb/through/-/through-2.3.9.tgz#85f221eb82f9d555e180e87d6e50fb154af85408"
   integrity sha512-yN599ZBuMPPK4tdoToLlvgJB4CLK8fGl7ntfy0Wn7U6ttNvHYurd81bfUiK/6sMkiIwm65R6ck4L6+Y3DfVbNQ==
 
-"@masa-finance/masa-contracts-identity@^1.10.1", "@masa-finance/masa-contracts-identity@^1.11.0":
+"@masa-finance/masa-contracts-identity@^1.11.0":
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-1.11.0.tgz#e42d3b629de25f7a3b92804d0971ca7cb09692a1"
   integrity sha512-LzRBgZmcf+zNPCENdnvNV40xlMkbUR1PZFHz0jhhVM89pbe8puRIIugG7kgwCD/majrYRBdWxraR+QQBcAi1dg==
@@ -1358,10 +1358,10 @@
   dependencies:
     "@types/chai" "*"
 
-"@types/chai@*", "@types/chai@^4.3.8":
-  version "4.3.8"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.8.tgz#aa200a264a3bc78ccfc1718eedbd3b9d5a591270"
-  integrity sha512-yW/qTM4mRBBcsA9Xw9FbcImYtFPY7sgr+G/O5RDYVmxiy9a+pE5FyoFUi8JYCZY5nicj8atrr1pcfPiYpeNGOA==
+"@types/chai@*", "@types/chai@^4.3.9":
+  version "4.3.9"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.9.tgz#144d762491967db8c6dea38e03d2206c2623feec"
+  integrity sha512-69TtiDzu0bcmKQv3yg1Zx409/Kd7r0b5F1PfpYJfSHzLGtB53547V4u+9iqKYsTu/O2ai6KTb0TInNpvuQ3qmg==
 
 "@types/concat-stream@^1.6.0":
   version "1.6.1"

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.8;
+pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@masa-finance/masa-contracts-identity/contracts/tokens/MasaSBTSelfSovereign.sol";
@@ -23,13 +23,15 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
     /// @param baseTokenURI Base URI of the token
     /// @param soulboundIdentity Address of the SoulboundIdentity contract
     /// @param paymentParams Payment gateway params
+    /// @param maxSBTToMint Maximum number of SBT that can be minted
     constructor(
         address admin,
         string memory name,
         string memory symbol,
         string memory baseTokenURI,
         address soulboundIdentity,
-        PaymentParams memory paymentParams
+        PaymentParams memory paymentParams,
+        uint256 maxSBTToMint
     )
         MasaSBTSelfSovereign(
             admin,
@@ -37,7 +39,8 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
             symbol,
             baseTokenURI,
             soulboundIdentity,
-            paymentParams
+            paymentParams,
+            maxSBTToMint
         )
         EIP712("ArcomiaOGCommunitySBT", "1.0.0")
     {}
@@ -70,6 +73,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
             to,
             _hash(identityId, authorityAddress, signatureDate),
             authorityAddress,
+            signatureDate,
             signature
         );
 
@@ -108,6 +112,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
             to,
             _hash(to, authorityAddress, signatureDate),
             authorityAddress,
+            signatureDate,
             signature
         );
 
@@ -135,65 +140,7 @@ contract ArcomiaOGCommunitySBT is MasaSBTSelfSovereign, ReentrancyGuard {
 
     /* ========== PRIVATE FUNCTIONS ========================================= */
 
-    function _hash(
-        uint256 identityId,
-        address authorityAddress,
-        uint256 signatureDate
-    ) internal view returns (bytes32) {
-        return
-            _hashTypedDataV4(
-                keccak256(
-                    abi.encode(
-                        keccak256(
-                            "Mint(uint256 identityId,address authorityAddress,uint256 signatureDate)"
-                        ),
-                        identityId,
-                        authorityAddress,
-                        signatureDate
-                    )
-                )
-            );
-    }
-
-    function _hash(
-        address to,
-        address authorityAddress,
-        uint256 signatureDate
-    ) internal view returns (bytes32) {
-        return
-            _hashTypedDataV4(
-                keccak256(
-                    abi.encode(
-                        keccak256(
-                            "Mint(address to,address authorityAddress,uint256 signatureDate)"
-                        ),
-                        to,
-                        authorityAddress,
-                        signatureDate
-                    )
-                )
-            );
-    }
-
     /* ========== MODIFIERS ================================================= */
 
     /* ========== EVENTS ==================================================== */
-
-    event MintedToIdentity(
-        uint256 tokenId,
-        uint256 identityId,
-        address authorityAddress,
-        uint256 signatureDate,
-        address paymentMethod,
-        uint256 mintPrice
-    );
-
-    event MintedToAddress(
-        uint256 tokenId,
-        address to,
-        address authorityAddress,
-        uint256 signatureDate,
-        address paymentMethod,
-        uint256 mintPrice
-    );
 }

@@ -667,7 +667,7 @@
   dependencies:
     call-bind "^1.0.2"
 
-"@masa-finance/masa-contracts-identity@^1.11.0", "@masa-finance/masa-contracts-identity@^1.12.0":
+"@masa-finance/masa-contracts-identity@^1.12.0", "@masa-finance/masa-contracts-identity@^1.12.0-alpha.2":
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/@masa-finance/masa-contracts-identity/-/masa-contracts-identity-1.12.0.tgz#29e83ad6d0c91f98f0bfdae1073cd5cbe6d1b045"
   integrity sha512-BUd7yuxZBuM08boBz77i7cXUlt51smcbjIOhw5dR82fYyis5LwzmokSE/5JJWdIO6M9VYgpeiAQrSWoh3LzHlA==
@@ -1442,10 +1442,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/mocha@^10.0.3":
-  version "10.0.3"
-  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-10.0.3.tgz#4804fe9cd39da26eb62fa65c15ea77615a187812"
-  integrity sha512-RsOPImTriV/OE4A9qKjMtk2MnXiuLLbcO3nCXK+kvq4nr0iMfFgpjaX3MPLb6f7+EL1FGSelYvuJMV6REH+ZPQ==
+"@types/mocha@^10.0.6":
+  version "10.0.6"
+  resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-10.0.6.tgz#818551d39113081048bdddbef96701b4e8bb9d1b"
+  integrity sha512-dJvrYWxP/UcXm36Qn36fxhUKu8A/xMRXVT2cliFF1Z7UA9liG5Psj3ezNSZw+5puH2czDXRLcXQxf8JbJt0ejg==
 
 "@types/node-fetch@^2.6.1":
   version "2.6.2"
